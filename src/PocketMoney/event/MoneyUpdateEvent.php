@@ -2,7 +2,6 @@
 
 namespace PocketMoney\event;
 
-use pocketmine\Player;
 use PocketMoney\PocketMoney;
 
 class MoneyUpdateEvent extends PocketMoneyEvent

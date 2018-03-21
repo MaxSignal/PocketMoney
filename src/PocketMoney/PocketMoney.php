@@ -2,14 +2,13 @@
 
 namespace PocketMoney;
 
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
 use pocketmine\utils\Config;
-
 use PocketMoney\constants\PlayerType;
 use PocketMoney\event\MoneyUpdateEvent;
 use PocketMoney\event\TransactionEvent;
@@ -402,7 +401,7 @@ class PocketMoney extends PluginBase implements Listener
         $this->system->save();
     }
 
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args)
+    public function onCommand(CommandSender $sender, Command $command, $label, array $args): bool
     {
         if ($sender instanceof Player) return $this->onCommandByUser($sender, $command, $label, $args);
         switch ($command->getName()) {
@@ -568,7 +567,7 @@ class PocketMoney extends PluginBase implements Listener
         }
     }
 
-    private function onCommandByUser(CommandSender $sender, Command $command, $label, array $args)
+    private function onCommandByUser(Player $sender, Command $command, $label, array $args)
     {
         switch ($command->getName()) {
             case "money":
