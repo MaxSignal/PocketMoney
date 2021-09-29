@@ -1,7 +1,7 @@
 name: "PocketMoney"
 main: "PocketMoney\\PocketMoney"
-version: 4.0.2
-api: [1.10.0, 2.1.0, 3.0.0-ALPHA12]
+version: 4.0.3
+api: [1.10.0, 2.1.0, 3.13.0]
 load: "POSTWORLD"
 author: "MinecrafterJPN"
 description: "The core economy system with many APIs"
