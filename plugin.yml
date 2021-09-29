@@ -1,6 +1,6 @@
 name: "PocketMoney"
 main: "PocketMoney\\PocketMoney"
-version: 4.0.4dev
+version: 4.0.4dev2
 api: [4.0.0]
 load: "POSTWORLD"
 author: "MinecrafterJPN"

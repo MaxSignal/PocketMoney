@@ -6,7 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use PocketMoney\constants\PlayerType;
@@ -409,6 +409,7 @@ class PocketMoney extends PluginBase implements Listener
     public function onCommand(CommandSender $sender, Command $command, $label, array $args): bool
     {
         if ($sender instanceof Player) return $this->onCommandByUser($sender, $command, $label, $args);
+        
         switch ($command->getName()) {
             case "money":
                 $subCommand = strtolower(array_shift($args));
@@ -644,7 +645,7 @@ class PocketMoney extends PluginBase implements Listener
                             $senderMessage = str_replace("{{target}}", $target, $senderMessage);
                             $senderMessage = str_replace("{{money}}", $formattedAmount, $senderMessage);
                             $sender->sendMessage($senderMessage);
-                            if (($targetPlayer = $this->getServer()->getPlayer($target)) instanceof Player) {
+                            if (($targetPlayer = $this->getServer()->getPlayerByPrefix($target)) instanceof Player) {
                                 $targetMessage = $this->getMessage("pay.result.target");
                                 $targetMessage = str_replace("{{sender}}", $sender->getName(), $targetMessage);
                                 $targetMessage = str_replace("{{money}}", $formattedAmount, $targetMessage);
