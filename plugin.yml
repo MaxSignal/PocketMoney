@@ -1,49 +1,45 @@
 name: "PocketMoney"
 main: "PocketMoney\\PocketMoney"
-version: 4.0.3
-api: [1.10.0, 2.1.0, 3.13.0]
+version: 4.0.4dev
+api: [4.0.0]
 load: "POSTWORLD"
 author: "MinecrafterJPN"
 description: "The core economy system with many APIs"
 website: "https://github.com/MinecrafterJPN/PocketMoney"
 commands:
- money:
-  description: "PocketMoney command"
-  usage: "/money [subcommand]"
-  permission: "pocketmoney.money"
+  money:
+    description: "PocketMoney command"
+    usage: "/money [subcommand]"
+    permission: "pocketmoney.money;pocketmoney.help;pocketmoney.view;pocketmoney.pay;pocketmoney.withdraw;pocketmoney.create;pocketmoney.hide;pocketmoney.unhide;pocketmoney.top;pocketmoney.stat"
 permissions:
- pocketmoney:
-  default: "op"
-  description: "Allows using everything PocketMoney has"
-  children:
   # The following permissions belong to commands
-   pocketmoney.money:
+  pocketmoney.money:
     default: true
     description: "Allows using \"/money\" command"
-   pocketmoney.help:
+  pocketmoney.help:
     default: true
     description: "Allows using \"/money help\" command"
-   pocketmoney.view:
+  pocketmoney.view:
     default: true
     description: "Allows using \"/money view\" command"
-   pocketmoney.pay:
+  pocketmoney.pay:
     default: true
     description: "Allows using \"/money pay\" command"
-   pocketmoney.withdraw:
+  pocketmoney.withdraw:
     default: true
     description: "Allows using \"/money withdraw\" command"
-   pocketmoney.create:
+  pocketmoney.create:
     default: true
     description: "Allows using \"/money create\" command"
-   pocketmoney.hide:
+  pocketmoney.hide:
     default: true
     description: "Allows using \"/money hide\" command"
-   pocketmoney.unhide:
+  pocketmoney.unhide:
     default: true
     description: "Allows using \"/money unhide\" command"
-   pocketmoney.top:
+  pocketmoney.top:
     default: true
     description: "Allows using \"/money top\" command"
-   pocketmoney.stat:
+  pocketmoney.stat:
     default: true
     description: "Allows using \"/money stat\" command"

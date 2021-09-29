@@ -111,26 +111,29 @@ class PocketMoney extends PluginBase implements Listener
         if (!$this->isRegistered($sender)) return false;
         if (!$this->grantMoney($sender, -$amount, false)) return false;
         if (!$this->grantMoney($receiver, $amount, false)) return false;
-        $this->getServer()->getPluginManager()->callEvent(
+        (
             new MoneyUpdateEvent(
                 $this,
                 $sender,
                 $this->getMoney($sender),
-                MoneyUpdateEvent::CAUSE_PAY));
-        $this->getServer()->getPluginManager()->callEvent(
+                MoneyUpdateEvent::CAUSE_PAY)
+            )->call();
+        (
             new MoneyUpdateEvent(
                 $this,
                 $receiver,
                 $this->getMoney($receiver),
-                MoneyUpdateEvent::CAUSE_PAY));
+                MoneyUpdateEvent::CAUSE_PAY)
+            )->call();
 
-        $this->getServer()->getPluginManager()->callEvent(
+        (
             new TransactionEvent(
                 $this,
                 $sender,
                 $receiver,
                 $amount,
-                TransactionEvent::TRANSACTION_PAY));
+                TransactionEvent::TRANSACTION_PAY)
+            )->call();
 
         return true;
     }
@@ -151,12 +154,13 @@ class PocketMoney extends PluginBase implements Listener
         if (!is_numeric($amount) or $amount < 0) return false;
         $this->users->set($account, array_merge($this->users->get($account), array("money" => $amount)));
         $this->users->save();
-        $this->getServer()->getPluginManager()->callEvent(
+        (
             new MoneyUpdateEvent(
                 $this,
                 $account,
                 $amount,
-                MoneyUpdateEvent::CAUSE_SET));
+                MoneyUpdateEvent::CAUSE_SET)
+        )->call();
         return true;
     }
 
@@ -179,12 +183,13 @@ class PocketMoney extends PluginBase implements Listener
         $this->users->set($account, array_merge($this->users->get($account), array("money" => $targetMoney + $amount)));
         $this->users->save();
         if ($callEvent) {
-            $this->getServer()->getPluginManager()->callEvent(
+            (
                 new MoneyUpdateEvent(
                     $this,
                     $account,
                     $this->getMoney($account),
-                    MoneyUpdateEvent::CAUSE_GRANT));
+                    MoneyUpdateEvent::CAUSE_GRANT)
+            )->call();
         }
 
         return true;
@@ -377,11 +382,11 @@ class PocketMoney extends PluginBase implements Listener
     // API ->
 
 
-    public function onLoad()
+    public function onLoad(): void
     {
     }
 
-    public function onEnable()
+    public function onEnable(): void
     {
         if (!file_exists($this->getDataFolder())) @mkdir($this->getDataFolder(), 0755, true);
         $this->users = new Config($this->getDataFolder() . "user.yml", Config::YAML);
@@ -395,7 +400,7 @@ class PocketMoney extends PluginBase implements Listener
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
-    public function onDisable()
+    public function onDisable(): void
     {
         $this->users->save();
         $this->system->save();
@@ -499,7 +504,7 @@ class PocketMoney extends PluginBase implements Listener
                             break;
                         }
                         $sender->sendMessage($this->getMessage("set.result.console"));
-                        if (($player = $this->getServer()->getPlayer($target)) instanceof Player) {
+                        if (($player = $this->getServer()->getPlayerByPrefix($target)) instanceof Player) {
                             $result = $this->getMessage("set.result.target");
                             $result = str_replace("{{money}}", $this->getFormattedMoney($amount), $result);
                             $player->sendMessage($result);
@@ -518,7 +523,7 @@ class PocketMoney extends PluginBase implements Listener
                             break;
                         }
                         $sender->sendMessage($this->getMessage("grant.result.console"));
-                        if (($player = $this->getServer()->getPlayer($target)) instanceof Player) {
+                        if (($player = $this->getServer()->getPlayerByPrefix($target)) instanceof Player) {
                             $result = $this->getMessage("grant.result.target");
                             $result = str_replace("{{money}}", $this->getFormattedMoney($amount), $result);
                             $player->sendMessage($result);
